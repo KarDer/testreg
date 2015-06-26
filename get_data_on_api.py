@@ -2,7 +2,7 @@ import urllib2
 import json
 
 # ************************ add new user ************************ #
-response = urllib2.urlopen('http://127.0.0.1:5000/api_registration?username=somenameIS&email=myfirst@mail.ua&pass=0000&phone=380668885522')
+response = urllib2.urlopen('http://31.131.18.202:8002/api_registration?username=somenameIS&email=myfirst@mail.ua&pass=0000&phone=380668885522')
 data = json.load(response)
 print data
 
@@ -12,7 +12,7 @@ print "*"*50
 # ************************ end ************************ #
 
 # ************************ filter ************************ #
-response = urllib2.urlopen('http://127.0.0.1:5000/api_filter?email=test@mail.com')
+response = urllib2.urlopen('http://31.131.18.202:8002/api_filter?email=test@mail.com')
 data = json.load(response)
 print data
 
@@ -26,7 +26,7 @@ else:
 print "*"*50
 
 
-response = urllib2.urlopen('http://127.0.0.1:5000/api_filter?username=testname')
+response = urllib2.urlopen('http://31.131.18.202:8002/api_filter?username=testname')
 data = json.load(response)
 print data
 if not 'result' in data:
@@ -39,7 +39,7 @@ else:
 print "*"*50
 
 
-response = urllib2.urlopen('http://127.0.0.1:5000/api_filter?phone=380665551122')
+response = urllib2.urlopen('http://31.131.18.202:8002/api_filter?phone=380665551122')
 data = json.load(response)
 print data
 
@@ -53,7 +53,7 @@ else:
 print "*"*50
 
 
-response = urllib2.urlopen('http://127.0.0.1:5000/api_filter?email=test@mail.com&phone=test@mail.com&username=test@mail.com')
+response = urllib2.urlopen('http://31.131.18.202:8002/api_filter?email=test@mail.com&phone=test@mail.com&username=test@mail.com')
 data = json.load(response)
 print data
 
