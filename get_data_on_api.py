@@ -51,18 +51,4 @@ if not 'result' in data:
 else:
     print data['result']
 print "*"*50
-
-
-response = urllib2.urlopen('http://31.131.18.202:8002/api_filter?email=test@mail.com&phone=test@mail.com&username=test@mail.com')
-data = json.load(response)
-print data
-
-if not 'result' in data:
-    for i in data:
-        print data[i]['username']
-        print data[i]['email']
-        print data[i]['date_added']
-else:
-    print data['result']
-print "*"*50
 # ************************ end ************************ #
