@@ -1,0 +1,56 @@
+{% extends "index.html" %}
+{% block body %}
+    <h2>Registration</h2>
+    {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+    <form action="{{ url_for('registration') }}" method="post" id="regform">
+        <dl>
+            <dt>*Username:</dt>
+            <dd><input type=text name=username></dd>
+
+            <dt>*Password:</dt>
+            <dd><input type=password name=pass></dd>
+
+            <dt>*Email:<div class="block_bad_promocode">This email already have</div></dt>
+            <dd><input type=text name=email id="email_field"></dd>
+
+            <dt>*Phone:</dt>
+            <dd><input type=text name=phone></dd>
+
+            <dd><input type=submit value=Registration onclick="submit_form();return false"></dd>
+        </dl>
+    </form>
+<script>
+    function verification_all_field(){
+        var empty = false;
+        $.each($('input'), function() {
+            if($(this).val() == ""){
+               $(this).css('border-color', 'red');
+               empty = true;
+            } else {
+               $(this).css('border', '1px solid #999');
+            }
+        });
+        return empty;
+    }
+
+    function submit_form(){
+        if(verification_all_field()){
+            return false;
+        }
+        $.post("/rpc_verification_email", {email: $('#email_field').val()})
+        .done(function(data) {
+            result = data;
+            if(result['result'] == 'ERROR'){
+                $('.block_bad_promocode').show();
+                $('#email_field').css('border-color', 'rgb(255, 0, 0)');
+            } else {
+                $('.block_bad_promocode').hide();
+                $('#email_field').css('border-color', 'rgb(238, 238, 238);');
+
+                $('#regform').submit();
+                return false;
+            }
+        });
+    }
+</script>
+{% endblock %}

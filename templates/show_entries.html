@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+{% block body %}
+{% if session.logged_in %}
+    <table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    {% for entry in entries %}
+        <tr>
+            <td>{{ entry.username }}</td>
+            <td>{{ entry.email }}</td>
+            <td>{{ entry.phone }}</td>
+            <td>{{ entry.date_added }}</td>
+        </tr>
+    {% else %}
+        <em>No entries here so far</em>
+    {% endfor %}
+    </table>
+{% else %}
+    <em>Log in to see a list of users</em>
+{% endif %}
+{% endblock %}
