@@ -1,4 +1,5 @@
 from flask import request, g
+import pickle
 
 class Users(object):
 
@@ -8,8 +9,8 @@ class Users(object):
         :return: [{'username': u'name', 'phone': 380669994411, 'email': u'mail@mail.com'}]
         """
         if filter and value:
-            cur = g.db.execute('select username, email, phone, date_added from user where '+filter+' = ? order by id desc', [value])
-            entries = [dict(username=row[0], email=row[1], phone=row[2], date_added=row[3]) for row in cur.fetchall()]
+            cur = g.db.execute('select username, email, phone, date_added, more from user where '+filter+' = ? order by id desc', [value])
+            entries = [dict(username=row[0], email=row[1], phone=row[2], date_added=row[3], more=pickle.loads(row[4])) for row in cur.fetchall()]
             return entries
         return ''
 
@@ -22,7 +23,7 @@ class Users(object):
         entries = [dict(username=row[0], email=row[1], phone=row[2], date_added=row[3]) for row in cur.fetchall()]
         return entries
 
-    def add_user(self, metod = 'form'):
+    def add_user(self, metod = 'form', more = ''):
         """
         Adds a new user in DB
         :return: If all is well - True
@@ -31,8 +32,8 @@ class Users(object):
             g.db.execute('insert into user (username, email, pass, phone) values (?, ?, ?, ?)',
                  [request.form['username'], request.form['email'], request.form['pass'], request.form['phone']])
         elif metod == 'get':
-            g.db.execute('insert into user (username, email, pass, phone) values (?, ?, ?, ?)',
-                 [request.args['username'], request.args['email'], request.args['pass'], request.args['phone']])
+            g.db.execute('insert into user (username, email, pass, phone, more) values (?, ?, ?, ?, ?)',
+                 [request.args['username'], request.args['email'], request.args['pass'], request.args['phone'], more])
         g.db.commit()
         return True
 

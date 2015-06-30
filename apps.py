@@ -1,6 +1,7 @@
 from __future__ import with_statement
 from contextlib import closing
 
+import pickle
 import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, \
      render_template, flash, jsonify
@@ -35,7 +36,6 @@ def api_filter():
     user = Users()
 
     if request.args.keys():
-        # If you entered more than one, then take the first
         filter = request.args.keys()[0]
         value = request.args[filter]
         result = user.get_on_filter(filter, value)
@@ -55,12 +55,17 @@ def api_registration():
     :return: OK or ERROR
     """
     user = Users()
+    more = {}
+
     if not user.verification_email(email = request.args.get("email")):
         return jsonify({"result": "ERROR"})
     if request.args.get("username") and request.args.get("email") and \
             request.args.get("pass")and request.args.get("phone"):
-        login_user = user.add_user(metod='get')
-
+        for i in request.args:
+            if i != "username" and i != "email" and i != "pass" and i != "phone":
+                more[i] = request.args[i]
+        more = pickle.dumps(more)
+        login_user = user.add_user(metod='get', more = more)
         if login_user:
             return jsonify({"result": "OK"})
 

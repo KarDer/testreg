@@ -5,5 +5,6 @@ create table user (
   email string not null UNIQUE,
   pass string not null,
   date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  phone integer not null
+  phone integer not null,
+  more string not null
 );
