@@ -29,8 +29,8 @@ class Users(object):
         :return: If all is well - True
         """
         if metod == 'form':
-            g.db.execute('insert into user (username, email, pass, phone) values (?, ?, ?, ?)',
-                 [request.form['username'], request.form['email'], request.form['pass'], request.form['phone']])
+            g.db.execute('insert into user (username, email, pass, phone, more) values (?, ?, ?, ?, ?)',
+                 [request.form['username'], request.form['email'], request.form['pass'], request.form['phone'], more])
         elif metod == 'get':
             g.db.execute('insert into user (username, email, pass, phone, more) values (?, ?, ?, ?, ?)',
                  [request.args['username'], request.args['email'], request.args['pass'], request.args['phone'], more])
